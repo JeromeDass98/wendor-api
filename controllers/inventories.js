@@ -10,7 +10,11 @@ import { RabbitMq } from '../middlewares/rabbitmq.js';
 
 export default class InventoryController {
 
-    static create(document) {
+    static async create(document) {
+        const existing = await Inventory.findOne({ name: document.name }, '_id').lean();
+        if (existing) {
+            throw new customErrors.BadRequestError('EXISTING', 'Other product with exists with same name');
+        }
         return Inventory.create(document);
     }
 

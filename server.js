@@ -51,7 +51,7 @@ fastify.register((instance, options, done) => {
 Mongoose.connect(process.env.MONGODB_URL)
 .then(() => {
     console.log('connected to db', process.env.MONGODB_DB);
-    fastify.listen({ port: process.env.PORT });
+    fastify.listen({ port: process.env.PORT, host: '0.0.0.0' });
 })
 .then(() => {
     console.log("Server started @", process.env.PORT);
